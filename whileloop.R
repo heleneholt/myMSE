@@ -18,6 +18,7 @@ while(slutcond < runcond) {
   print(paste(runcond, "iter:", counter))
 }
 
+# hej med dig
 
 # Startværdier
 a0 <- 0
@@ -27,22 +28,33 @@ max_iter <- 10     # Antal iterationer
 distances <- numeric(max_iter + 1)  # Gem distancer her
 
 # While-loopet
-i <- 0
+i <- 1
+convert=T
 
-while (i <= max_iter) {
+while (convert == T) {
   # Beregn a og y
   current_a <- a0 + i * increment
   y_current <- current_a * x + b0
   
   # Beregn distancen
-  distances[i + 1] <- sum((y - y_current)^2)
+  old_distance= distances[i - 1]
+  new_distances=sum((y - y_current)^2)
+  if(old_distance>new_distances){
+    distances[i] = new_distances
+  } else{
+    print(c("best slope", current_a, "after ", i))
+    convert = F
+  }
   
   # Tegn linjen
   abline(b0, current_a, col = "green")
   
   # Incrementér tælleren
   i <- i + 1
+  Sys.sleep(1)
 }
+
+lm(y ~ x)
 
 # Udskriv distancer
 print(distances)
